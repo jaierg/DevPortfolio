@@ -4,6 +4,9 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Jaier Gordon — Front-End Engineer',
   description: 'Front-End Engineer specializing in AI-powered customer experiences, React, TypeScript, and Next.js.',
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     title: 'Jaier Gordon — Front-End Engineer',
     description: 'Building customer-facing AI experiences and scalable front-end systems.',

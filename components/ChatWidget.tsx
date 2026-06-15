@@ -11,7 +11,7 @@ const STARTERS = [
 ];
 
 export default function ChatWidget() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [showTooltip, setShowTooltip] = useState(false);
   const [startersVisible, setStartersVisible] = useState(true);
   const bottomRef = useRef<HTMLDivElement>(null);

@@ -21,13 +21,6 @@ export default function Home() {
       tags: ['Next.js', 'TypeScript', 'Vercel AI SDK', 'Supabase pgvector', 'OpenAI'],
     },
     {
-      title: 'AI Portfolio Chatbot',
-      status: 'Shipped',
-      active: false,
-      desc: 'A React.js application integrated with the OpenAI API, connected to GitHub to surface project details and career experience through natural language.',
-      tags: ['React', 'OpenAI API', 'GitHub API'],
-    },
-    {
       title: 'Recipe Finder App',
       status: 'Shipped',
       active: false,
