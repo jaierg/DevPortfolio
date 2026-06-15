@@ -1,0 +1,114 @@
+@startuml jaier-dev Architecture
+!define ACCENT #00E87B
+!define PRIMARY #0A0A0B
+!define SECONDARY #1A1A1B
+!define TERTIARY #2A2A2B
+
+skinparam linetype ortho
+skinparam backgroundColor PRIMARY
+skinparam ArrowColor ACCENT
+skinparam borderColor ACCENT
+skinparam FontColor #FFFFFF
+skinparam DefaultFontName "JetBrains Mono"
+
+' Client Layer
+package "🖥️  FRONTEND" #1a1a1b {
+  component "Browser\n(React 18)" as browser
+  component "Chat Widget" as chat
+  component "Portfolio" as portfolio
+}
+
+' API Layer
+package "⚡ EDGE FUNCTIONS (Vercel)" #2a2a2b {
+  component "POST /api/chat\n(Streaming)" as api
+  note on link api
+    Node.js Runtime
+    30s timeout
+  end note
+}
+
+' Processing Layer
+package "🧠 AI PROCESSING" #3a3a3b {
+  component "1. Embed Query\n(OpenAI)" as embed
+  component "2. Search Vectors\n(Supabase)" as search
+  component "3. Build Prompt\n(Context)" as prompt
+  component "4. Stream Response\n(GPT-4o-mini)" as generate
+}
+
+' External Services
+package "☁️  EXTERNAL SERVICES" #2a3a2b {
+  component "OpenAI API\n• text-embedding-3-small\n• GPT-4o-mini" as openai
+  component "Supabase\n• PostgreSQL\n• pgvector" as supabase
+  component "GitHub API\n(Ingest only)" as github
+}
+
+' Database
+package "🗄️  DATA LAYER" #2a2b3a {
+  database "documents table\n(id, content, embedding, metadata)" as db
+  component "IVF Index\n(pgvector)" as index
+  component "RLS Policies\n(Public Read)" as rls
+}
+
+' Flow
+browser --> chat
+browser --> portfolio
+chat --> api
+portfolio --> api
+
+api --> embed
+embed --> openai
+
+api --> search
+search --> supabase
+
+supabase --> db
+supabase --> index
+supabase --> rls
+
+api --> prompt
+prompt --> generate
+generate --> openai
+
+openai --> api
+api --> browser: SSE Stream
+
+note on link github
+  Used only in
+  npm run ingest
+end note
+
+' Annotations
+note right of chat
+  • Real-time streaming
+  • EventSource listener
+  • Display tokens as they arrive
+end note
+
+note right of embed
+  Cost: ~$0.0002/query
+  Time: 200-300ms
+end note
+
+note right of search
+  • IVF similarity search
+  • Top-5 documents
+  • Returns with similarity scores
+  • Time: 10-50ms
+end note
+
+note right of index
+  • 1536-dim vectors
+  • Cosine similarity
+  • ~200-300 docs currently
+  • Scales to millions
+end note
+
+note right of generate
+  • gpt-4o-mini streaming
+  • max_tokens: 400
+  • temperature: 0.7
+  • Cost: ~$0.003-0.005/query
+  • Time: 1-3 seconds
+end note
+
+@enduml

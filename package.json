@@ -1,0 +1,30 @@
+{
+  "name": "jaier-dev",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "ingest": "npx tsx scripts/ingest.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^0.0.24",
+    "@ai-sdk/react": "^0.0.20",
+    "@supabase/supabase-js": "^2.45.0",
+    "ai": "^3.1.22",
+    "next": "14.2.5",
+    "openai": "^4.57.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "dotenv": "^16.4.5",
+    "tsx": "^4.17.0",
+    "typescript": "^5"
+  }
+}
